@@ -48,18 +48,30 @@ angleA1 = 2*pi*r^2 # generate matrix with angular component uniformly
 angleA2 = 2*pi*r^2 # generate matrix with component uniformly
 
 # Chord endpoints calculation as follows
-xA1 = cx + r*cos(angleA1)
-yA1 = cy + r*sin(angleA1)
-xA2 = cx + r*cos(angleA2)
-yA2 = cy + r*sin(angleA2)
+Z <- tibble(
+  xA1 = cx + r*cos(angleA1),
+  yA1 = cy + r*sin(angleA1),
+  xA2 = cx + r*cos(angleA2),
+  yA2 = cy + r*sin(angleA2) 
+)
 
 # Calculate midpoints of chord
-xA0 = (xA1 + xA2) / 2
-yA0 = (yA1 + yA2) / 2
+Mid_chrd <- tibble(
+  xA0 = ((xA1 + xA2) / 2),
+  yA0 = ((yA1 + yA2) / 2)
+)
 
+lengthSide <- r*sqrt(3) # length of triangle side
+lengthA <- hypotenuse((xA1 - xA2), (yA1 -yA2))
 
-
-
+# Plot
+p <- ggplot() +
+  ggforce::geom_circle(aes(cx = 0, cy = 0, r = 5), col = "gray50") +
+  geom_segment(data = Z , aes(xA1 = xA1, yA1 = yA1, xA2 = xA2, yA2 = yA2)) +
+  geom_segment(data = Mid_chrd, aes(xA0 = xA0, yA0= yA0),
+               col = "red3") 
+  
+    
 
 
 
