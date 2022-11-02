@@ -34,24 +34,26 @@ rdmchr_df <- tibble(
 ggsave(p, file = "plot.png", height = 5, width = 7)
 
 
+
 # Method A 
-cx = 0 
-cy = 0 #centre of disk
 
-r = 5 #disk radius
-n = 2 #number of lines
+# Centre of disk
+cx = 0
+cy = 0 
 
+r = 5 # disk radius
+n = 2 # number of lines
 
-angleA1 = 2*pi*r^2 #generate matrix with angular component uniformly
-angleA2 = 2*pi*r^2 #generate matrix with component uniformly
+angleA1 = 2*pi*r^2 # generate matrix with angular component uniformly
+angleA2 = 2*pi*r^2 # generate matrix with component uniformly
 
-#chord endpoints calculation as follows
+# Chord endpoints calculation as follows
 xA1 = cx + r*cos(angleA1)
 yA1 = cy + r*sin(angleA1)
 xA2 = cx + r*cos(angleA2)
 yA2 = cy + r*sin(angleA2)
 
-#calculate midpoints of chord
+# Calculate midpoints of chord
 xA0 = (xA1 + xA2) / 2
 yA0 = (yA1 + yA2) / 2
 
