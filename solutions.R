@@ -24,7 +24,7 @@ rdmchr_df <- tibble(
 )
 
 # Plot
-p <- ggplot() +
+ p <- ggplot() +
   ggforce::geom_circle(aes(x0 = 0, y0 = 0, r = 1), col = "gray50") +
   geom_segment(data = eqtri_df, aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_segment(data = rdmchr_df, aes(x = x, y = y, xend = xend, yend = yend),
@@ -32,3 +32,32 @@ p <- ggplot() +
   coord_equal()
 
 ggsave(p, file = "plot.png", height = 5, width = 7)
+
+cx=0 
+cy=0 #centre of disk
+
+r = input('enter a value for radius : ') #disk radius
+n = input('enter number of lines : ') #number of lines
+
+
+# Method A 
+angleA1=2*pi*rand(n,1) #generate matrix with angular component uniformly
+angleA2=2*pi*rand(n,1) #generate matrix with component uniformly
+
+#chord endpoints calculation as follows
+xA1 = cx + r*cos(angleA1)
+yA1 = cy + r*sin(angleA1)
+xA2 = cx + r*cos(angleA2)
+yA2 = cy + r*sin(angleA2)
+
+#calculate midpoints of chord
+xA0 = (xA1 + xA2) / 2
+yA0 = (yA1 + yA2) / 2
+
+
+
+
+
+
+
+
