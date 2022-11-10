@@ -3,6 +3,7 @@
 
 library(tidyverse)
 library(ggforce)
+library(ggplot2)
 theme_set(theme_void())
 
 # Draw a random chord in a unit circle centred at origin -----------------------
@@ -96,29 +97,63 @@ yB0 = (yB1+yB2)/2
 # Method C
 
 # Centre of disk
-cx = 0
-cy = 0 
+ax = 0
+ay = 0 
 
 diameter = 10
 r = diameter / 2
 n = 1
 
-angleC1 = 2*pi*r*runif(n,1) # generate matrix with angular component uniformly
-angleC2 = 2*pi*r*runif(n,1) # generate matrix with component uniformly
+angleC1 = 2*pi*r*runif(n,min=0,max=1) # generate matrix with angular component uniformly
+angleC2 = 2*pi*r*runif(n,min=0,max=1) # generate matrix with component uniformly
 
 # Chord endpoints calculation as follows
-Z <- tibble(
-  xC1 = cx + r*cos(angleC1),
-  yC1 = cy + r*sin(angleC1),
-  xC2 = cx + r*cos(angleC2),
-  yC2 = cy + r*sin(angleC2) 
-)
+xC1 = ax + r*cos(angleC1)
+yC1 = ay + r*sin(angleC1)
+xC2 = ax + r*cos(angleC2)
+yC2 = ay + r*sin(angleC2) 
 
 # Calculate midpoints of chord
-Mid_chrd <- tibble(
-  xC0 = (xC1 + xC2) / 2,
-  yC0 = (yC1 + yC2) / 2
-)
+xC0 = (xC1 + xC2) / 2
+yC0 = (yC1 + yC2) / 2
+
+# Statistics on chord lengths
+lengthSide=r*sqrt(3) #length of triangle side
+
+# Chord lengths
+
+lengthA=hypot(xA1-xA2,yB1-yB2) #Method A
+lengthB=hypot(xB1-xB2,yB1-yB2) #Method B
+lengthC=hypotenuse(xC1-xC2,yC1-yC2) #Method C
+
+%estimated probability of chord being longer than triangle side
+probEstA=mean(lengthA>lengthSide) %Method A
+probEstB=mean(lengthB>lengthSide) %Method B
+probEstC=mean(lengthC>lengthSide) %Method C
+%%%END Do some statistics on chord lengths END%%%
+  
+
+
+
+
+
+
+
+# Plot
+ggplot() +
+  ggforce::geom_circle(aes(ax = 0, ay = 0, r = 5), col = "gray50") +
+  geom_segment(data = ,aes(xC1 = xC1, yC1 = yC1, xC2 = xC2, yC2 = yC2)) +
+  geom_segment(data = ,aes(xC0 = xC0, yC0 = yC0),
+               col = "red3") 
+
+
+
+
+
+
+
+
+
 
 lengthSide <- r*sqrt(3) # length of triangle side
 lengthA <- hypotenuse((xC1 - xC2), (yC1 -yC2))
@@ -135,11 +170,13 @@ yp <- r*sin(t)
 circleFun <- function(centre = c(0,0),diameter = 10, npoints = 200){
   r = diameter / 2
   t <- seq(0,2*pi,length = npoints)
-  xx <- center[1] + r * cos(tt)
-  yy <- center[2] + r * sin(tt)
+  xx <- centre[1] + r * cos(tt)
+  yy <- centre[2] + r * sin(tt)
   return(data.frame(x = xx, y = yy))
 }    
 
+dat<- circleFun(c(0,0), n=2)
+ggplot(dat,aes(x,y)) + geom_path()
 
 # Plot
 p <- ggplot() +
