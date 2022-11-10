@@ -34,15 +34,21 @@ rdmchr_df <- tibble(
 ggsave(p, file = "plot.png", height = 5, width = 7)
 
 
+# Method A
 
-# Method A 
+
+# Method B
+
+
+# Method C
 
 # Centre of disk
 cx = 0
 cy = 0 
 
-r = 5 # disk radius
-n = 2 # number of lines
+diameter = 10
+r = diameter / 2
+n = 1
 
 angleA1 = 2*pi*r*runif(n,1) # generate matrix with angular component uniformly
 angleA2 = 2*pi*r*runif(n,1) # generate matrix with component uniformly
