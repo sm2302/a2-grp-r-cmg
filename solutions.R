@@ -44,8 +44,8 @@ cy = 0
 r = 5 # disk radius
 n = 2 # number of lines
 
-angleA1 = 2*pi*r^2 # generate matrix with angular component uniformly
-angleA2 = 2*pi*r^2 # generate matrix with component uniformly
+angleA1 = 2*pi*r*runif(n,1) # generate matrix with angular component uniformly
+angleA2 = 2*pi*r*runif(n,1) # generate matrix with component uniformly
 
 # Chord endpoints calculation as follows
 Z <- tibble(
@@ -57,12 +57,30 @@ Z <- tibble(
 
 # Calculate midpoints of chord
 Mid_chrd <- tibble(
-  xA0 = ((xA1 + xA2) / 2),
-  yA0 = ((yA1 + yA2) / 2)
+  xA0 = (xA1 + xA2) / 2,
+  yA0 = (yA1 + yA2) / 2
 )
 
 lengthSide <- r*sqrt(3) # length of triangle side
 lengthA <- hypotenuse((xA1 - xA2), (yA1 -yA2))
+
+# estimated probability of chord being longer than triangle side
+probEstA <- mean(lengthA > lengthSide) 
+
+# create points for circle
+t <- seq(0,2*pi,length = 200)
+xp <- r*cos(t)
+yp <- r*sin(t)
+
+
+circleFun <- function(centre = c(0,0),diameter = 10, npoints = 200){
+  r = diameter / 2
+  t <- seq(0,2*pi,length = npoints)
+  xx <- center[1] + r * cos(tt)
+  yy <- center[2] + r * sin(tt)
+  return(data.frame(x = xx, y = yy))
+}    
+
 
 # Plot
 p <- ggplot() +
@@ -71,7 +89,7 @@ p <- ggplot() +
   geom_segment(data = Mid_chrd, aes(xA0 = xA0, yA0= yA0),
                col = "red3") 
   
-    
+
 
 
 
