@@ -122,15 +122,15 @@ lengthSide=r*sqrt(3) #length of triangle side
 
 # Chord lengths
 
-lengthA=hypot(xA1-xA2,yB1-yB2) #Method A
-lengthB=hypot(xB1-xB2,yB1-yB2) #Method B
-lengthC=hypotenuse(xC1-xC2,yC1-yC2) #Method C
+lengthA=sqrt((xA1-xA2)^2+(yB1-yB2)^2) #Method A
+lengthB=sqrt((xB1-xB2)^2+(yB1-yB2)^2) #Method B
+lengthC=sqrt((xC1-xC2)^2+(yC1-yC2)^2) #Method C
 
-%estimated probability of chord being longer than triangle side
-probEstA=mean(lengthA>lengthSide) %Method A
-probEstB=mean(lengthB>lengthSide) %Method B
-probEstC=mean(lengthC>lengthSide) %Method C
-%%%END Do some statistics on chord lengths END%%%
+#estimated probability of chord being longer than triangle side
+probEstA=mean(lengthA>lengthSide) #Method A
+probEstB=mean(lengthB>lengthSide) #Method B
+probEstC=mean(lengthC>lengthSide) #Method C
+
   
 
 
