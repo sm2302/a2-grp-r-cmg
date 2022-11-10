@@ -44,25 +44,53 @@ diameter = 10
 r = diameter / 2
 n = 1
 
-angleA=2*pi*runif(n, min=0, max=1)
-pA=r*sqrt(runif(n, min=0, max=1))
-qA=sqrt((r^2)-(pA^2))
+angleA = 2*pi*runif(n, min=0, max=1)
+pA = r*sqrt(runif(n, min=0, max=1))
+qA = sqrt((r^2)-(pA^2))
 
-#Calculate Trig Values
-sin_angleA=sin(angleA)
-cos_angleA=cos(angleA)
+# Calculate Trig Values
+sin_angleA = sin(angleA)
+cos_angleA = cos(angleA)
+ 
+# Calculate Chord endpoints
+xA1 = (ax+pA)*((cos_angleA+qA)*(sin_angleA))
+yA1 = (ay+pA)*((sin_angleA-qA)*(cos_angleA))
+xA2 = (ax+pA)*((cos_angleA-qA)*(sin_angleA))
+yA2 = (ay+pA)*((sin_angleA+qA)*(cos_angleA))
 
-#Calculate Chord endpoints
-xA1=(ax+pA)*((cos_angleA+qA)*(sin_angleA))
-yA1=(ay+pA)*((sin_angleA-qA)*(cos_angleA))
-xA2=(ax+pA)*((cos_angleA-qA)*(sin_angleA))
-yA2=(ay+pA)*((sin_angleA+qA)*(cos_angleA))
+# Calculate midpoints of chords
+xA0 = (xA1+xA2)/2
+yA0 = (yA1+yA2)/2
 
-#Calculate midpoints of chords
-xA0=(xA1+xA2)/2
-yA0=(yA1+yA2)/2
 
 # Method B
+
+# Centre of disk
+ax = 0
+ay = 0 
+
+diameter = 10
+r = diameter / 2
+n = 1
+
+angleB = 2*pi*runif(n, min=0, max=1) # Choose angular component uniformly
+pB = r*runif(n, min=0, max=1) # Choose radial component uniformly
+qB = sqrt((r^2)-(pB^2))
+qB2 = 2*sqrt((r^2)-(pB^2)) #Length of chord
+
+# Calculate Trig Values
+sin_angleB = sin(angleB)
+cos_angleB = cos(angleB)
+
+# Calculate Chord endpoints
+xB1 = (ax+pB)*((cos_angleB+qB)*(sin_angleB))
+yB1 = (ay+pB)*((sin_angleB-qB)*(cos_angleB))
+xB2 = (ax+pB)*((cos_angleB-qB)*(sin_angleB))
+yB2 = (ay+pB)*((sin_angleB+qB)*(cos_angleB))
+
+#Calculate midpoints of chords
+xB0 = (xB1+xB2)/2
+yB0 = (yB1+yB2)/2
 
 
 # Method C
