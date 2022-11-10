@@ -36,6 +36,31 @@ ggsave(p, file = "plot.png", height = 5, width = 7)
 
 # Method A
 
+# Centre of disk
+ax = 0
+ay = 0 
+
+diameter = 10
+r = diameter / 2
+n = 1
+
+angleA=2*pi*runif(n, min=0, max=1)
+pA=r*sqrt(runif(n, min=0, max=1))
+qA=sqrt((r^2)-(pA^2))
+
+#Calculate Trig Values
+sin_angleA=sin(angleA)
+cos_angleA=cos(angleA)
+
+#Calculate Chord endpoints
+xA1=(ax+pA)*((cos_angleA+qA)*(sin_angleA))
+yA1=(ay+pA)*((sin_angleA-qA)*(cos_angleA))
+xA2=(ax+pA)*((cos_angleA-qA)*(sin_angleA))
+yA2=(ay+pA)*((sin_angleA+qA)*(cos_angleA))
+
+#Calculate midpoints of chords
+xA0=(xA1+xA2)/2
+yA0=(yA1+yA2)/2
 
 # Method B
 
@@ -50,25 +75,25 @@ diameter = 10
 r = diameter / 2
 n = 1
 
-angleA1 = 2*pi*r*runif(n,1) # generate matrix with angular component uniformly
-angleA2 = 2*pi*r*runif(n,1) # generate matrix with component uniformly
+angleC1 = 2*pi*r*runif(n,1) # generate matrix with angular component uniformly
+angleC2 = 2*pi*r*runif(n,1) # generate matrix with component uniformly
 
 # Chord endpoints calculation as follows
 Z <- tibble(
-  xA1 = cx + r*cos(angleA1),
-  yA1 = cy + r*sin(angleA1),
-  xA2 = cx + r*cos(angleA2),
-  yA2 = cy + r*sin(angleA2) 
+  xC1 = cx + r*cos(angleC1),
+  yC1 = cy + r*sin(angleC1),
+  xC2 = cx + r*cos(angleC2),
+  yC2 = cy + r*sin(angleC2) 
 )
 
 # Calculate midpoints of chord
 Mid_chrd <- tibble(
-  xA0 = (xA1 + xA2) / 2,
-  yA0 = (yA1 + yA2) / 2
+  xC0 = (xC1 + xC2) / 2,
+  yC0 = (yC1 + yC2) / 2
 )
 
 lengthSide <- r*sqrt(3) # length of triangle side
-lengthA <- hypotenuse((xA1 - xA2), (yA1 -yA2))
+lengthA <- hypotenuse((xC1 - xC2), (yC1 -yC2))
 
 # estimated probability of chord being longer than triangle side
 probEstA <- mean(lengthA > lengthSide) 
