@@ -47,7 +47,7 @@ n = 100
 
 
 angleA = 2*pi*runif(n, min=-1, max=1)
-pA = r*sqrt(runif(n, min=-1, max=1))
+pA = r*runif(n, min=-1, max=1)
 qA = sqrt((r^2)-(pA^2))
 
 # Calculate Trig Values
@@ -72,9 +72,9 @@ yA0 = (yA1+yA2)/2
 ax = 0
 ay = 0 
 
-diameter = 10
-r = diameter / 2
-n = 2
+
+r = 3
+n = 100
 
 angleB = 2*pi*runif(n, min=0, max=1) # Choose angular component uniformly
 pB = r*runif(n, min=0, max=1) # Choose radial component uniformly
@@ -83,19 +83,19 @@ qB2 = 2*sqrt((r^2)-(pB^2)) #Length of chord
 
 
 # Calculate Trig Values
-sin_angleB = sin(eqtri_dfMethodB)
-cos_angleB = cos(eqtri_dfMethodB)
+sin_angleB = sin(angleB)
+cos_angleB = cos(angleB)
 
 # Calculate Chord endpoints
-xB1 = (3.349672)*((0.5985989+3.712101)*(-0.8010489))
-yB1 = (4.137526)*((0.2548968-2.807291)*(-0.9669683))
-xB2 = (3.349672)*((0.5985989-3.712101)*(-0.8010489))
-yB2 = (4.137526)*((0.2548968+2.807291)*(-0.9669683))
+xB1 = (ax+pB)*(cos_angleB+qB)*(sin_angleB)
+yB1 = (ay+pB)*(sin_angleB-qB)*(cos_angleB)
+xB2 = (ax+pB)*(cos_angleB-qB)*(sin_angleB)
+yB2 = (ay+pB)*(sin_angleB+qB)*(cos_angleB)
 
 
 #Calculate midpoints of chords
-xB0 = (-11.56669+8.354308)/2
-yB0 = (10.21176-12.25137)/2
+xB0 = (xB1+xB2)/2
+yB0 = (yB1+yBA2)/2
 
 
 # Method C----------------------------------------------------------------------
@@ -104,23 +104,23 @@ yB0 = (10.21176-12.25137)/2
 ax = 0
 ay = 0 
 
-diameter = 10
-r = diameter / 2
-n = 2
 
-angleC1 = 2*pi*r*runif(n,min=-1,max=0.5) # choose angular component uniformly
-angleC2 = 2*pi*r*runif(n,min=-1,max=0.5)  # choose angular component uniformly
+r = 3
+n = 100
+
+angleC1 = 2*pi*r*runif(n,min=0,max=pi/2) # choose angular component uniformly
+angleC2 = 2*pi*r*runif(n,min=0,max=pi/2)  # choose angular component uniformly
 
 # Chord endpoints calculation as follows
-xC1 = 0 + r*cos(-0.4293923)
-yC1 = 0 + r*sin(-23.0923336)
-xC2 = 0 + r*cos(8.838027)
-yC2 = 0 + r*sin(-16.521362)
+xC1 = ax + r*cos(angleC1) 
+yC1 = ay + r*sin(angleC1)
+xC2 = ax + r*cos(angleC2)
+yC2 = ay + r*sin(angleC2)
 
 
 # Calculate midpoints of chord
-xC0 = (4.546095 + (-4.16372)) / 2
-yC0 = (4.458721 + (3.633132)) / 2
+xC0 = (xC1+xC2)/2
+yC0 = (yC1+yC2)/2
 
 
 
@@ -129,8 +129,8 @@ lengthSide=r*sqrt(3) #length of triangle side
 
 # Chord lengths-----------------------------------------------------------------
 lengthA=sqrt((xA1-xA2)^2+(yA1-yA2)^2) #Method A
-lengthB=sqrt((-11.56669-8.354308)^2+(10.21176+12.25137)^2) #Method B
-lengthC=sqrt((4.546095+4.16372)^2+(4.458721-3.633132)^2) #Method C
+lengthB=sqrt((xB1-xB2)^2+(yB1-yB2)^2) #Method B
+lengthC=sqrt((xC1-xC2)^2+(yC1-yC2)^2) #Method C
 
 #estimated probability of chord being longer than triangle side-----------------
 probEstA=mean(lengthA>lengthSide) #Method A
