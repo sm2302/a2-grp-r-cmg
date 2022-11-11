@@ -133,30 +133,30 @@ r = diameter / 2
 n = 2
 
 eqtri_dfMethodC <- tibble(
-angleC1 = 2*pi*r*runif(n,min=-1,max=1), # generate matrix with angular component uniformly
-angleC2 = 2*pi*r*runif(n,min=-1,max=1)  # generate matrix with component uniformly
+angleC1 = 2*pi*r*runif(n,min=-1,max=0.5), # choose angular component uniformly
+angleC2 = 2*pi*r*runif(n,min=-1,max=0.5)  # choose angular component uniformly
 )
 
 # Chord endpoints calculation as follows
 rdmchr_dfMethodC<- tibble(
-  xC1 = 0 + r*cos(5.782940),
-  yC1 = 0 + r*sin(-8.348994),
-  xC2 = 0 + r*cos(-20.67278),
-  yC2 = 0 + r*sin(13.57668),
+  xC1 = 0 + r*cos(-0.4293923),
+  yC1 = 0 + r*sin(-23.0923336),
+  xC2 = 0 + r*cos(8.838027),
+  yC2 = 0 + r*sin(-16.521362),
 )
 
 # Calculate midpoints of chord
-xC0 = (4.387325 + (-1.248778)) / 2
-yC0 = (-4.399814 + (4.234982)) / 2
+xC0 = (4.546095 + (-4.16372)) / 2
+yC0 = (4.458721 + (3.633132)) / 2
+
 
 # Statistics on chord lengths
 lengthSide=r*sqrt(3) #length of triangle side
 
 # Chord lengths
-
 lengthA=sqrt((0.5084606+0.33207)^2+(8.184001+11.75718)^2) #Method A
 lengthB=sqrt((-11.56669-8.354308)^2+(10.21176+12.25137)^2) #Method B
-lengthC=sqrt((4.387325+1.248778)^2+(-4.399814-4.234982)^2) #Method C
+lengthC=sqrt((4.546095+4.16372)^2+(4.458721-3.633132)^2) #Method C
 
 #estimated probability of chord being longer than triangle side
 probEstA=mean(lengthA>lengthSide) #Method A
@@ -171,12 +171,6 @@ probEstC=mean(lengthC>lengthSide) #Method C
 
 
 
-# Plot
-ggplot() +
-  ggforce::geom_circle(aes(ax = 0, ay = 0, r = 5), col = "gray50") +
-  geom_segment(data = ,aes(xC1 = xC1, yC1 = yC1, xC2 = xC2, yC2 = yC2)) +
-  geom_segment(data = ,aes(xC0 = xC0, yC0 = yC0),
-               col = "red3") 
 
 
 
@@ -187,36 +181,10 @@ ggplot() +
 
 
 
-lengthSide <- r*sqrt(3) # length of triangle side
-lengthA <- hypotenuse((xC1 - xC2), (yC1 -yC2))
-
-# estimated probability of chord being longer than triangle side
-probEstA <- mean(lengthA > lengthSide) 
-
-# create points for circle
-t <- seq(0,2*pi,length = 200)
-xp <- r*cos(t)
-yp <- r*sin(t)
 
 
-circleFun <- function(centre = c(0,0),diameter = 10, npoints = 200){
-  r = diameter / 2
-  t <- seq(0,2*pi,length = npoints)
-  xx <- centre[1] + r * cos(tt)
-  yy <- centre[2] + r * sin(tt)
-  return(data.frame(x = xx, y = yy))
-}    
 
-dat<- circleFun(c(0,0), n=2)
-ggplot(dat,aes(x,y)) + geom_path()
 
-# Plot
-p <- ggplot() +
-  ggforce::geom_circle(aes(cx = 0, cy = 0, r = 5), col = "gray50") +
-  geom_segment(data = Z , aes(xA1 = xA1, yA1 = yA1, xA2 = xA2, yA2 = yA2)) +
-  geom_segment(data = Mid_chrd, aes(xA0 = xA0, yA0= yA0),
-               col = "red3") 
-  
 
 
 
