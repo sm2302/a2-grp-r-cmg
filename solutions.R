@@ -34,51 +34,42 @@ rdmchr_df <- tibble(
 ggsave(p, file = "plot.png", height = 5, width = 7)
 
 
-# Method A
+
+# Method A----------------------------------------------------------------------
 
 # Centre of disk
 ax = 0
 ay = 0 
 
-diameter = 10
-r = diameter / 2
-n = 2
 
-eqtri_dfMethodA <- tibble(
-  angleA = 2*pi*runif(n, min=0, max=1),
-  pA = r*sqrt(runif(n, min=0, max=1)),
-  qA = sqrt((r^2)-(pA^2)),
-)
+r = 3 
+n = 10^5
+
+
+angleA = 2*pi*runif(n, min=-1, max=-0.5)
+pA = r*sqrt(runif(n, min=-1, max=-0.5))
+qA = sqrt((r^2)-(pA^2))
+
 
 
 # Calculate Trig Values
-sin_angleA = sin(eqtri_dfMethodA)
-cos_angleA = cos(eqtri_dfMethodA)
+sin_angleA = sin(angleA)
+cos_angleA = cos(angleA)
  
 # Calculate Chord endpoints
-rdmchr_dfMethodA<- tibble(
-  xA1 = (1.538834)*((0.9983508+4.757309)*(0.05740773)),
-  yA1 = (4.191306)*((0.48852271-2.726344)*(-0.8725512)),
-  xA2 = (1.538834)*((0.9983508-4.757309)*(0.05740773)),
-  yA2 = (4.191306)*((0.48852271+2.726344)*(-0.8725512)),
-)
+ 
+  xA1 = (ax+pA)*((cos_angleA+qA)*(sin_angleA))
+  yA1 = (ay+pA)*((sin_angleA-qA)*(cos_angleA))
+  xA2 = (ax+pA)*((cos_angleA-qA)*(sin_angleA))
+  yA2 = (ay+pA)*((sin_angleA+qA)*(cos_angleA))
+
 
 # Calculate midpoints of chords
-xA0 = (0.5084606+-0.33207)/2
-yA0 = (8.184001+-11.75718)/2
-
-# Plot
-p <- ggplot() +
-  ggforce::geom_circle(aes(ax = 0, ay = 0, r = 5), col = "gray50") +
-  geom_segment(data = eqtri_dfMethodA, aes(angleA=angleA, pA=pA, qA=qA)) +
-  geom_segment(data = rdmchr_dfMethodA, aes(xA1=xA1, yA1=yA1, xA2=xA2, yA2=yA2),
-               col = "red3") +
-  coord_equal()
-
-ggsave(p, file = "plot.png", height = 5, width = 7)
+xA0 = (xA1+xA2)/2
+yA0 = (yA1+yA2)/2
 
 
-# Method B
+# Method B----------------------------------------------------------------------
 
 # Centre of disk
 ax = 0
@@ -88,12 +79,12 @@ diameter = 10
 r = diameter / 2
 n = 2
 
-eqtri_dfMethodB <- tibble(
+
   angleB = 2*pi*runif(n, min=0, max=1), # Choose angular component uniformly
   pB = r*runif(n, min=0, max=1), # Choose radial component uniformly
   qB = sqrt((r^2)-(pB^2)),
   qB2 = 2*sqrt((r^2)-(pB^2)), #Length of chord
-)
+
 
 # Calculate Trig Values
 sin_angleB = sin(eqtri_dfMethodB)
@@ -111,18 +102,8 @@ rdmchr_dfMethodB<- tibble(
 xB0 = (-11.56669+8.354308)/2
 yB0 = (10.21176-12.25137)/2
 
-# Plot
-p <- ggplot() +
-  ggforce::geom_circle(aes(ax = 0, ay = 0, r = 5), col = "gray50") +
-  geom_segment(data = eqtri_dfMethodB, aes(angleB=angleB, pB=pB, qB=qB)) +
-  geom_segment(data = rdmchr_dfMethodB, aes(xB1=xB1, yB1=yB1, xB2=xB2, yB2=yB2),
-               col = "red3") +
-  coord_equal()
 
-ggsave(p, file = "plot.png", height = 5, width = 7)
-
-
-# Method C
+# Method C----------------------------------------------------------------------
 
 # Centre of disk
 ax = 0
@@ -150,16 +131,18 @@ xC0 = (4.546095 + (-4.16372)) / 2
 yC0 = (4.458721 + (3.633132)) / 2
 
 
-# Statistics on chord lengths
+
+
+# Statistics on chord lengths---------------------------------------------------
 lengthSide=r*sqrt(3) #length of triangle side
 
 # Chord lengths
-lengthA=sqrt((0.5084606+0.33207)^2+(8.184001+11.75718)^2) #Method A
+lengthA=sqrt((xA1+xA2)^2+(yA1+yA2)^2) #Method A
 lengthB=sqrt((-11.56669-8.354308)^2+(10.21176+12.25137)^2) #Method B
 lengthC=sqrt((4.546095+4.16372)^2+(4.458721-3.633132)^2) #Method C
 
 #estimated probability of chord being longer than triangle side
-probEstA=mean(lengthA>lengthSide) #Method A
+ 
 probEstB=mean(lengthB>lengthSide) #Method B
 probEstC=mean(lengthC>lengthSide) #Method C
 
