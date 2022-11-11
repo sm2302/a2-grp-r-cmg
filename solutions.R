@@ -61,7 +61,6 @@ rdmchr_dfMethodA<- tibble(
   yA1 = (4.191306)*((0.48852271-2.726344)*(-0.8725512)),
   xA2 = (1.538834)*((0.9983508-4.757309)*(0.05740773)),
   yA2 = (4.191306)*((0.48852271+2.726344)*(-0.8725512)),
-  
 )
 
 # Calculate midpoints of chords
@@ -72,19 +71,11 @@ yA0 = (8.184001+-11.75718)/2
 p <- ggplot() +
   ggforce::geom_circle(aes(ax = 0, ay = 0, r = 5), col = "gray50") +
   geom_segment(data = eqtri_dfMethodA, aes(angleA=angleA, pA=pA, qA=qA)) +
-  geom_segment(data = rdmchr_df, aes(xA1=xA1, yA1=yA1, xA2=xA2, yA2=yA2),
+  geom_segment(data = rdmchr_dfMethodA, aes(xA1=xA1, yA1=yA1, xA2=xA2, yA2=yA2),
                col = "red3") +
   coord_equal()
 
 ggsave(p, file = "plot.png", height = 5, width = 7)
-
-
-
-
-
-
-
-
 
 
 # Method B
@@ -95,26 +86,40 @@ ay = 0
 
 diameter = 10
 r = diameter / 2
-n = 1
+n = 2
 
-angleB = 2*pi*runif(n, min=0, max=1) # Choose angular component uniformly
-pB = r*runif(n, min=0, max=1) # Choose radial component uniformly
-qB = sqrt((r^2)-(pB^2))
-qB2 = 2*sqrt((r^2)-(pB^2)) #Length of chord
+eqtri_dfMethodB <- tibble(
+  angleB = 2*pi*runif(n, min=0, max=1), # Choose angular component uniformly
+  pB = r*runif(n, min=0, max=1), # Choose radial component uniformly
+  qB = sqrt((r^2)-(pB^2)),
+  qB2 = 2*sqrt((r^2)-(pB^2)), #Length of chord
+)
 
 # Calculate Trig Values
-sin_angleB = sin(angleB)
-cos_angleB = cos(angleB)
+sin_angleB = sin(eqtri_dfMethodB)
+cos_angleB = cos(eqtri_dfMethodB)
 
 # Calculate Chord endpoints
-xB1 = (ax+pB)*((cos_angleB+qB)*(sin_angleB))
-yB1 = (ay+pB)*((sin_angleB-qB)*(cos_angleB))
-xB2 = (ax+pB)*((cos_angleB-qB)*(sin_angleB))
-yB2 = (ay+pB)*((sin_angleB+qB)*(cos_angleB))
+rdmchr_dfMethodB<- tibble(
+  xB1 = (3.349672)*((0.5985989+3.712101)*(-0.8010489)),
+  yB1 = (4.137526)*((0.2548968-2.807291)*(-0.9669683)),
+  xB2 = (3.349672)*((0.5985989-3.712101)*(-0.8010489)),
+  yB2 = (4.137526)*((0.2548968+2.807291)*(-0.9669683)),
+)
 
 #Calculate midpoints of chords
-xB0 = (xB1+xB2)/2
-yB0 = (yB1+yB2)/2
+xB0 = (-11.56669+8.354308)/2
+yB0 = (10.21176-12.25137)/2
+
+# Plot
+p <- ggplot() +
+  ggforce::geom_circle(aes(ax = 0, ay = 0, r = 5), col = "gray50") +
+  geom_segment(data = eqtri_dfMethodB, aes(angleB=angleB, pB=pB, qB=qB)) +
+  geom_segment(data = rdmchr_dfMethodB, aes(xB1=xB1, yB1=yB1, xB2=xB2, yB2=yB2),
+               col = "red3") +
+  coord_equal()
+
+ggsave(p, file = "plot.png", height = 5, width = 7)
 
 
 # Method C
