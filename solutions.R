@@ -1,4 +1,7 @@
-
+## Reference : 
+## 10.2: Bertrand’s Paradox. (2020, May 5).Statistics LibreTexts. 
+## Retrieved November 11, 2022,
+## from https://stats.libretexts.org/Bookshelves/Probability_Theory/Probability_Mathematical_Statistics_and_Stochastic_Processes_(Siegrist)/10%3A_Geometric_Models/10.02%3A_Bertrand’s_Paradox
 
 library(tidyverse)
 
