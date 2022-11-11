@@ -130,24 +130,24 @@ ay = 0
 
 diameter = 10
 r = diameter / 2
-n = 1
+n = 2
 
 eqtri_dfMethodC <- tibble(
-angleC1 = 2*pi*r*runif(n,min=0,max=1), # generate matrix with angular component uniformly
-angleC2 = 2*pi*r*runif(n,min=0,max=1)  # generate matrix with component uniformly
+angleC1 = 2*pi*r*runif(n,min=-1,max=1), # generate matrix with angular component uniformly
+angleC2 = 2*pi*r*runif(n,min=-1,max=1)  # generate matrix with component uniformly
 )
 
 # Chord endpoints calculation as follows
 rdmchr_dfMethodC<- tibble(
-  xC1 = 0 + r*cos(1.52831),
-  yC1 = 0 + r*sin(1.52831),
-  xC2 = 0 + r*cos(16.4373),
-  yC2 = 0 + r*sin(16.4373)
+  xC1 = 0 + r*cos(5.782940),
+  yC1 = 0 + r*sin(-8.348994),
+  xC2 = 0 + r*cos(-20.67278),
+  yC2 = 0 + r*sin(13.57668),
 )
 
 # Calculate midpoints of chord
-xC0 = (0.2123677 + (-3.728083)) / 2
-yC0 = (4.995488 + (-3.331876)) / 2
+xC0 = (4.387325 + (-1.248778)) / 2
+yC0 = (-4.399814 + (4.234982)) / 2
 
 # Statistics on chord lengths
 lengthSide=r*sqrt(3) #length of triangle side
@@ -156,7 +156,7 @@ lengthSide=r*sqrt(3) #length of triangle side
 
 lengthA=sqrt((0.5084606+0.33207)^2+(8.184001+11.75718)^2) #Method A
 lengthB=sqrt((-11.56669-8.354308)^2+(10.21176+12.25137)^2) #Method B
-lengthC=sqrt((0.2123677+3.728083)^2+(4.995488+3.331876)^2) #Method C
+lengthC=sqrt((4.387325+1.248778)^2+(-4.399814-4.234982)^2) #Method C
 
 #estimated probability of chord being longer than triangle side
 probEstA=mean(lengthA>lengthSide) #Method A
