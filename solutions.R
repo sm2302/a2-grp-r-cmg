@@ -3,7 +3,6 @@
 
 library(tidyverse)
 library(ggforce)
-library(ggplot2)
 theme_set(theme_void())
 
 # Draw a random chord in a unit circle centred at origin -----------------------
@@ -43,25 +42,49 @@ ay = 0
 
 diameter = 10
 r = diameter / 2
-n = 1
+n = 2
 
-angleA = 2*pi*runif(n, min=0, max=1)
-pA = r*sqrt(runif(n, min=0, max=1))
-qA = sqrt((r^2)-(pA^2))
+eqtri_dfMethodA <- tibble(
+  angleA = 2*pi*runif(n, min=0, max=1),
+  pA = r*sqrt(runif(n, min=0, max=1)),
+  qA = sqrt((r^2)-(pA^2)),
+)
+
 
 # Calculate Trig Values
-sin_angleA = sin(angleA)
-cos_angleA = cos(angleA)
+sin_angleA = sin(eqtri_dfMethodA)
+cos_angleA = cos(eqtri_dfMethodA)
  
 # Calculate Chord endpoints
-xA1 = (ax+pA)*((cos_angleA+qA)*(sin_angleA))
-yA1 = (ay+pA)*((sin_angleA-qA)*(cos_angleA))
-xA2 = (ax+pA)*((cos_angleA-qA)*(sin_angleA))
-yA2 = (ay+pA)*((sin_angleA+qA)*(cos_angleA))
+rdmchr_dfMethodA<- tibble(
+  xA1 = (1.538834)*((0.9983508+4.757309)*(0.05740773)),
+  yA1 = (4.191306)*((0.48852271-2.726344)*(-0.8725512)),
+  xA2 = (1.538834)*((0.9983508-4.757309)*(0.05740773)),
+  yA2 = (4.191306)*((0.48852271+2.726344)*(-0.8725512)),
+  
+)
 
 # Calculate midpoints of chords
-xA0 = (xA1+xA2)/2
-yA0 = (yA1+yA2)/2
+xA0 = (0.5084606+-0.33207)/2
+yA0 = (8.184001+-11.75718)/2
+
+# Plot
+p <- ggplot() +
+  ggforce::geom_circle(aes(ax = 0, ay = 0, r = 5), col = "gray50") +
+  geom_segment(data = eqtri_dfMethodA, aes(angleA=angleA, pA=pA, qA=qA)) +
+  geom_segment(data = rdmchr_df, aes(xA1=xA1, yA1=yA1, xA2=xA2, yA2=yA2),
+               col = "red3") +
+  coord_equal()
+
+ggsave(p, file = "plot.png", height = 5, width = 7)
+
+
+
+
+
+
+
+
 
 
 # Method B
