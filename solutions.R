@@ -43,25 +43,22 @@ ay = 0
 
 
 r = 3 
-n = 10^5
+n = 100
 
 
-angleA = 2*pi*runif(n, min=-1, max=-0.5)
-pA = r*sqrt(runif(n, min=-1, max=-0.5))
+angleA = 2*pi*runif(n, min=-1, max=1)
+pA = r*sqrt(runif(n, min=-1, max=1))
 qA = sqrt((r^2)-(pA^2))
-
-
 
 # Calculate Trig Values
 sin_angleA = sin(angleA)
 cos_angleA = cos(angleA)
  
 # Calculate Chord endpoints
- 
-  xA1 = (ax+pA)*((cos_angleA+qA)*(sin_angleA))
-  yA1 = (ay+pA)*((sin_angleA-qA)*(cos_angleA))
-  xA2 = (ax+pA)*((cos_angleA-qA)*(sin_angleA))
-  yA2 = (ay+pA)*((sin_angleA+qA)*(cos_angleA))
+xA1 = (ax+pA)*(cos_angleA+qA)*(sin_angleA)
+yA1 = (ay+pA)*(sin_angleA-qA)*(cos_angleA)
+xA2 = (ax+pA)*(cos_angleA-qA)*(sin_angleA)
+yA2 = (ay+pA)*(sin_angleA+qA)*(cos_angleA)
 
 
 # Calculate midpoints of chords
@@ -79,11 +76,10 @@ diameter = 10
 r = diameter / 2
 n = 2
 
-
-  angleB = 2*pi*runif(n, min=0, max=1), # Choose angular component uniformly
-  pB = r*runif(n, min=0, max=1), # Choose radial component uniformly
-  qB = sqrt((r^2)-(pB^2)),
-  qB2 = 2*sqrt((r^2)-(pB^2)), #Length of chord
+angleB = 2*pi*runif(n, min=0, max=1) # Choose angular component uniformly
+pB = r*runif(n, min=0, max=1) # Choose radial component uniformly
+qB = sqrt((r^2)-(pB^2))
+qB2 = 2*sqrt((r^2)-(pB^2)) #Length of chord
 
 
 # Calculate Trig Values
@@ -91,12 +87,11 @@ sin_angleB = sin(eqtri_dfMethodB)
 cos_angleB = cos(eqtri_dfMethodB)
 
 # Calculate Chord endpoints
-rdmchr_dfMethodB<- tibble(
-  xB1 = (3.349672)*((0.5985989+3.712101)*(-0.8010489)),
-  yB1 = (4.137526)*((0.2548968-2.807291)*(-0.9669683)),
-  xB2 = (3.349672)*((0.5985989-3.712101)*(-0.8010489)),
-  yB2 = (4.137526)*((0.2548968+2.807291)*(-0.9669683)),
-)
+xB1 = (3.349672)*((0.5985989+3.712101)*(-0.8010489))
+yB1 = (4.137526)*((0.2548968-2.807291)*(-0.9669683))
+xB2 = (3.349672)*((0.5985989-3.712101)*(-0.8010489))
+yB2 = (4.137526)*((0.2548968+2.807291)*(-0.9669683))
+
 
 #Calculate midpoints of chords
 xB0 = (-11.56669+8.354308)/2
@@ -113,18 +108,15 @@ diameter = 10
 r = diameter / 2
 n = 2
 
-eqtri_dfMethodC <- tibble(
-angleC1 = 2*pi*r*runif(n,min=-1,max=0.5), # choose angular component uniformly
+angleC1 = 2*pi*r*runif(n,min=-1,max=0.5) # choose angular component uniformly
 angleC2 = 2*pi*r*runif(n,min=-1,max=0.5)  # choose angular component uniformly
-)
 
 # Chord endpoints calculation as follows
-rdmchr_dfMethodC<- tibble(
-  xC1 = 0 + r*cos(-0.4293923),
-  yC1 = 0 + r*sin(-23.0923336),
-  xC2 = 0 + r*cos(8.838027),
-  yC2 = 0 + r*sin(-16.521362),
-)
+xC1 = 0 + r*cos(-0.4293923)
+yC1 = 0 + r*sin(-23.0923336)
+xC2 = 0 + r*cos(8.838027)
+yC2 = 0 + r*sin(-16.521362)
+
 
 # Calculate midpoints of chord
 xC0 = (4.546095 + (-4.16372)) / 2
@@ -132,17 +124,16 @@ yC0 = (4.458721 + (3.633132)) / 2
 
 
 
-
 # Statistics on chord lengths---------------------------------------------------
 lengthSide=r*sqrt(3) #length of triangle side
 
-# Chord lengths
-lengthA=sqrt((xA1+xA2)^2+(yA1+yA2)^2) #Method A
+# Chord lengths-----------------------------------------------------------------
+lengthA=sqrt((xA1-xA2)^2+(yA1-yA2)^2) #Method A
 lengthB=sqrt((-11.56669-8.354308)^2+(10.21176+12.25137)^2) #Method B
 lengthC=sqrt((4.546095+4.16372)^2+(4.458721-3.633132)^2) #Method C
 
-#estimated probability of chord being longer than triangle side
- 
+#estimated probability of chord being longer than triangle side-----------------
+probEstA=mean(lengthA>lengthSide) #Method A
 probEstB=mean(lengthB>lengthSide) #Method B
 probEstC=mean(lengthC>lengthSide) #Method C
 
